@@ -510,7 +510,6 @@ class Token(flask_restful.Resource):
     ]
 
     @basic_auth.login_required
-    @logging_bind_request
     def get(self):
         action_logger.info(self.__class__)
         return flask.jsonify({"token": jwt_token(username=auth.current_user().username)})
@@ -528,7 +527,6 @@ class EncryptedToken(flask_restful.Resource):
     ]
 
     @basic_auth.login_required
-    @logging_bind_request
     def get(self):
 
         return flask.jsonify(
