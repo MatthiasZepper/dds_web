@@ -6,7 +6,6 @@
 
 # Standard library
 import datetime
-import logging
 import pathlib
 import secrets
 import os
@@ -117,8 +116,8 @@ def jwt_token(username, expires_in=datetime.timedelta(hours=48), additional_clai
 # ENDPOINTS ############################################################################ ENDPOINTS #
 ####################################################################################################
 class AddUser(flask_restful.Resource):
-    @auth.login_required
     @logging_bind_request
+    @auth.login_required
     def post(self):
         """Create an invite and send email."""
 
@@ -153,8 +152,8 @@ class AddUser(flask_restful.Resource):
                     ddserr.error_codes["DDSArgumentError"]["status"],
                 )
 
-    @staticmethod
     @logging_bind_request
+    @staticmethod
     def invite_user(args):
         """Invite a new user"""
 
@@ -231,8 +230,8 @@ class AddUser(flask_restful.Resource):
         # TODO: Format response with marshal with?
         return {"email": new_invite.email, "message": "Invite successful!", "status": 200}
 
-    @staticmethod
     @logging_bind_request
+    @staticmethod
     def add_user_to_project(existing_user, project, role):
         """Add existing user to a project"""
 
@@ -290,8 +289,8 @@ class AddUser(flask_restful.Resource):
 
 
 class RetrieveUserInfo(flask_restful.Resource):
-    @auth.login_required
     @logging_bind_request
+    @auth.login_required
     def get(self):
         """Return own info when queried"""
         curr_user = auth.current_user()
@@ -311,8 +310,8 @@ class DeleteUserSelf(flask_restful.Resource):
     Every user can self-delete the own account with an e-mail confirmation.
     """
 
-    @auth.login_required
     @logging_bind_request
+    @auth.login_required
     def delete(self):
 
         current_user = auth.current_user()
@@ -409,8 +408,8 @@ class DeleteUser(flask_restful.Resource):
 
     Unit admins can delete unitusers. Super admins can delete any user."""
 
-    @auth.login_required(role=["Super Admin", "Unit Admin"])
     @logging_bind_request
+    @auth.login_required(role=["Super Admin", "Unit Admin"])
     def delete(self):
 
         user = user_schemas.UserSchema().load(flask.request.json)
@@ -454,8 +453,8 @@ class DeleteUser(flask_restful.Resource):
 
 
 class RemoveUserAssociation(flask_restful.Resource):
-    @auth.login_required
     @logging_bind_request
+    @auth.login_required
     def post(self):
         """Remove a user from a project"""
 
@@ -509,8 +508,8 @@ class Token(flask_restful.Resource):
         )
     ]
 
-    @basic_auth.login_required
     @logging_bind_request
+    @basic_auth.login_required
     def get(self):
         action_logger.info(self.__class__)
         return flask.jsonify({"token": jwt_token(username=auth.current_user().username)})
@@ -527,8 +526,8 @@ class EncryptedToken(flask_restful.Resource):
         )
     ]
 
-    @basic_auth.login_required
     @logging_bind_request
+    @basic_auth.login_required
     def get(self):
 
         return flask.jsonify(
@@ -543,8 +542,8 @@ class EncryptedToken(flask_restful.Resource):
 class ShowUsage(flask_restful.Resource):
     """Calculate and display the amount of GB hours and the total cost."""
 
-    @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
     @logging_bind_request
+    @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
     def get(self):
         current_user = auth.current_user()
 
@@ -619,8 +618,8 @@ class ShowUsage(flask_restful.Resource):
 class InvoiceUnit(flask_restful.Resource):
     """Calculate the actual cost from the Safespring invoicing specification."""
 
-    @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
     @logging_bind_request
+    @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
     def get(self):
         current_user = auth.current_user()
 
