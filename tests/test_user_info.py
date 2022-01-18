@@ -52,7 +52,6 @@ def test_get_info_unit_user(client):
         headers=token,
         content_type="application/json",
     )
-    print(response.data)
     assert response.status_code == http.HTTPStatus.OK
     user_info = response.json["info"]
 
