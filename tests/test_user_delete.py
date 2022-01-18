@@ -56,7 +56,7 @@ def test_del_self_nouser(client):
         data=None,
         content_type="application/json",
     )
-    assert response.status_code == http.HTTPStatus.BAD_REQUEST
+    assert response.status_code == http.HTTPStatus.UNAUTHORIZED
 
 
 def test_del_self(client):

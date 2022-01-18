@@ -88,7 +88,6 @@ def logging_bind_request(func):
 
     @functools.wraps(func)
     def wrapper_logging_bind_request(*args, **kwargs):
-        # try:
         if auth.current_user():
             current_user = auth.current_user().username
         elif flask_login.current_user.is_authenticated:
