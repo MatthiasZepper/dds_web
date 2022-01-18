@@ -351,7 +351,6 @@ class FileInfo(flask_restful.Resource):
     """Get file info on files to download."""
 
     @auth.login_required
-    @logging_bind_request
     def get(self):
         """Checks which files can be downloaded, and get their info."""
 
