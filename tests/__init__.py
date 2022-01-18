@@ -65,7 +65,6 @@ class UserAuth:
     def token(self, client):
 
         response = client.get(DDSEndpoint.TOKEN, auth=(self.as_tuple()))
-        print(f"Token response: {response}")
 
         # Get response from api
         response_json = response.json
