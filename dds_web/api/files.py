@@ -69,8 +69,8 @@ def check_eligibility_for_deletion(status, has_been_available):
 class NewFile(flask_restful.Resource):
     """Inserts a file into the database"""
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def post(self):
         """Add new file to DB"""
 
@@ -90,8 +90,8 @@ class NewFile(flask_restful.Resource):
 
         return flask.jsonify({"message": f"File '{new_file.name}' added to db."})
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def put(self):
 
         project = project_schemas.ProjectRequiredSchema().load(flask.request.args)
@@ -264,8 +264,8 @@ class ListFiles(flask_restful.Resource):
 class RemoveFile(flask_restful.Resource):
     """Removes files from the database and s3 with boto3."""
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def delete(self):
         """Deletes the files"""
 
@@ -289,8 +289,8 @@ class RemoveFile(flask_restful.Resource):
 class RemoveDir(flask_restful.Resource):
     """Removes one or more full directories from the database and s3."""
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def delete(self):
         """Deletes the folders."""
 
@@ -387,8 +387,8 @@ class FileInfoAll(flask_restful.Resource):
 class UpdateFile(flask_restful.Resource):
     """Update file info after download"""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def put(self):
         """Update info in db."""
 

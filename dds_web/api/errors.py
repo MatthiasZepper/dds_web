@@ -37,7 +37,7 @@ class LoggedHTTPException(exceptions.HTTPException):
         if auth.current_user():
             current_user = auth.current_user().username
         elif flask_login.current_user.is_authenticated:
-            current_user = flask_login.current_user().username
+            current_user = flask_login.current_user.username
         elif flask.request.remote_addr:
             current_user = flask.request.remote_addr  # log IP instead of username
         elif flask.request.access_route:

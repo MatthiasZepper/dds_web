@@ -46,8 +46,8 @@ from dds_web.api.schemas import user_schemas
 class ProjectStatus(flask_restful.Resource):
     """Get and update Project status"""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def get(self):
         """Get current project status and optionally entire status history"""
         project = project_schemas.ProjectRequiredSchema().load(flask.request.args)
@@ -63,8 +63,8 @@ class ProjectStatus(flask_restful.Resource):
 
         return flask.jsonify(return_info)
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def post(self):
         """Update Project Status"""
         project = project_schemas.ProjectRequiredSchema().load(flask.request.args)
@@ -204,8 +204,8 @@ class ProjectStatus(flask_restful.Resource):
 class GetPublic(flask_restful.Resource):
     """Gets the public key beloning to the current project."""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def get(self):
         """Get public key from database."""
 
@@ -222,8 +222,8 @@ class GetPublic(flask_restful.Resource):
 class GetPrivate(flask_restful.Resource):
     """Gets the private key belonging to the current project."""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def get(self):
         """Get private key from database"""
 
@@ -261,8 +261,8 @@ class GetPrivate(flask_restful.Resource):
 class UserProjects(flask_restful.Resource):
     """Gets all projects registered to a specific user."""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def get(self):
         """Get info regarding all projects which user is involved in."""
         current_user = auth.current_user()
@@ -322,8 +322,8 @@ class UserProjects(flask_restful.Resource):
 class RemoveContents(flask_restful.Resource):
     """Removes all project contents."""
 
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def delete(self):
         """Removes all project contents."""
 
@@ -346,8 +346,8 @@ class RemoveContents(flask_restful.Resource):
 
         return flask.jsonify({"removed": True})
 
-    @logging_bind_request
     @staticmethod
+    @logging_bind_request
     def delete_project_contents(project):
         """Remove project contents"""
         DBConnector(project=project).delete_all()
@@ -363,8 +363,8 @@ class RemoveContents(flask_restful.Resource):
 
 
 class CreateProject(flask_restful.Resource):
-    @logging_bind_request
     @auth.login_required(role=["Super Admin", "Unit Admin", "Unit Personnel"])
+    @logging_bind_request
     def post(self):
         """Create a new project"""
 
@@ -432,8 +432,8 @@ class CreateProject(flask_restful.Resource):
 class ProjectUsers(flask_restful.Resource):
     """Get all users in a specific project."""
 
-    @logging_bind_request
     @auth.login_required
+    @logging_bind_request
     def get(self):
 
         project = project_schemas.ProjectRequiredSchema().load(flask.request.args)
