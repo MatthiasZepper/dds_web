@@ -293,7 +293,6 @@ class RetrieveUserInfo(flask_restful.Resource):
     @logging_bind_request
     def get(self):
         """Return own info when queried"""
-        flask.current_app.logger.debug(flask.request.headers)
         curr_user = auth.current_user()
 
         info = {}
