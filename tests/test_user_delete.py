@@ -90,10 +90,11 @@ def test_del_route_invalid_token(client):
     """Use invalid signature"""
     client = tests.UserAuth(tests.USER_CREDENTIALS["delete_me_researcher"]).fake_web_login(client)
 
-    with pytest.raises(itsdangerous.exc.BadSignature):
+    with pytest.raises(itsdangerous.exc.BadSignature) as pyerr:
         response = client.get(
             tests.DDSEndpoint.USER_CONFIRM_DELETE + "invalidtoken", content_type="application/json"
         )
+    assert "No b'.' found in value" in pyerr.data
 
 
 def test_del_route_expired_token(client):
@@ -101,11 +102,10 @@ def test_del_route_expired_token(client):
     token = "InJlc2VhcmNodXNlcjFAbWFpbHRyYXAuaW8i.YbIcrg.BmxUW6fKsnC3ujO5z1E_5CYiit4"
     client = tests.UserAuth(tests.USER_CREDENTIALS["delete_me_researcher"]).fake_web_login(client)
 
-    with pytest.raises(itsdangerous.exc.BadTimeSignature);
+    with pytest.raises(itsdangerous.exc.BadTimeSignature):
         response = client.get(
             tests.DDSEndpoint.USER_CONFIRM_DELETE + token, content_type="application/json"
         )
-
 
 
 def test_del_route_valid_token_wrong_user(client):
