@@ -59,7 +59,6 @@ def get_user_roles_common(user):
 
 @auth.verify_token
 def verify_token(token):
-    flask.current_app.logger.debug(flask.request.headers)
     try:
         data = (
             verify_token_signature(token)
