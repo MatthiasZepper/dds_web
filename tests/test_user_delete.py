@@ -67,6 +67,7 @@ def test_del_self(client):
         data=None,
         content_type="application/json",
     )
+    print(response.data)
     assert response.status_code == http.HTTPStatus.OK
 
     # assert creation of deletion request

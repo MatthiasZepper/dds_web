@@ -43,13 +43,16 @@ def test_get_info_unit_user(client):
 
 def test_get_info_unit_user(client):
     """Get info for a research user"""
+    token = tests.UserAuth(tests.USER_CREDENTIALS["researchuser"]).token(client)
+    print(token)
+    assert token
 
     response = client.get(
         tests.DDSEndpoint.USER_INFO,
-        headers=tests.UserAuth(tests.USER_CREDENTIALS["researchuser"]).token(client),
+        headers=token,
         content_type="application/json",
     )
-
+    print(response.data)
     assert response.status_code == http.HTTPStatus.OK
     user_info = response.json["info"]
 
@@ -70,6 +73,7 @@ def test_get_info_superadmin_user(client):
         content_type="application/json",
     )
 
+    print(response.headers)
     assert response.status_code == http.HTTPStatus.OK
     user_info = response.json["info"]
 

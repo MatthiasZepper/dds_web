@@ -293,7 +293,13 @@ class RetrieveUserInfo(flask_restful.Resource):
     @logging_bind_request
     def get(self):
         """Return own info when queried"""
-        curr_user = auth.current_user()
+        flask.current_app.logger.debug(flask.request.headers)
+        try:
+            curr_user = auth.current_user()
+        except Exception as err:
+            flask.current_app.logger.debug(err)
+            raise
+        print(f"Current user: {curr_user}")
         info = {}
         info["email_primary"] = curr_user.primary_email
         info["emails_all"] = [x.email for x in curr_user.emails]
