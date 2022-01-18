@@ -347,7 +347,6 @@ class RemoveContents(flask_restful.Resource):
         return flask.jsonify({"removed": True})
 
     @staticmethod
-    @logging_bind_request
     def delete_project_contents(project):
         """Remove project contents"""
         DBConnector(project=project).delete_all()
