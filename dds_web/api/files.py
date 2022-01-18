@@ -374,7 +374,6 @@ class FileInfoAll(flask_restful.Resource):
     """Get info on all project files."""
 
     @auth.login_required
-    @logging_bind_request
     def get(self):
         """Get file info."""
 
