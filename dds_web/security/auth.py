@@ -75,6 +75,7 @@ def verify_token(token):
         raise AuthenticationError(message="Invalid token")
 
     expiration_time = data.get("exp")
+    flask.current_app.logger.debug(datetime.datetime.fromtimestamp(expiration_time))
     # we use a hard check on top of the one from the dependency
     # exp shouldn't be before now no matter what
     if dds_web.utils.current_time() <= datetime.datetime.fromtimestamp(expiration_time):
