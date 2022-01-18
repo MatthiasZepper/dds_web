@@ -47,7 +47,7 @@ class LoggedHTTPException(exceptions.HTTPException):
 
         with structlog.threadlocal.bound_threadlocal(
             resource=flask.request.path or "not applicable",  # or rather flask.request.endpoint?
-            request_args=flask.request.json or "{}",
+            request_args=flask.request.json if flask.request.data else None,
             user=current_user,
         ):
             if error_codes[self.__class__.__name__]:
