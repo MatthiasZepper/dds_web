@@ -102,7 +102,7 @@ def logging_bind_request(func):
 
         with structlog.threadlocal.bound_threadlocal(
             resource=flask.request.path or "not applicable",
-            request_args=flask.request.json or None,
+            request_args=flask.request.json if flask.request.data else None,
             user=current_user,
         ):
 
